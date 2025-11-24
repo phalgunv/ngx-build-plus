@@ -79,6 +79,25 @@ function setupConfigHook(transforms: Transforms, options: any, context: BuilderC
       const additionalConfig = require(filePath);
       config = webpackMerge([config, additionalConfig]);
     }
+
+    // Handle stylePreprocessorOptions.sass
+    if (options.stylePreprocessorOptions && options.stylePreprocessorOptions.sass) {
+      const sassOptions = options.stylePreprocessorOptions.sass;
+      if (config.module && config.module.rules) {
+        config.module.rules.forEach((rule: any) => {
+          if (rule.test && (rule.test.toString().includes('scss') || rule.test.toString().includes('sass'))) {
+            if (rule.use) {
+              rule.use.forEach((loader: any) => {
+                if (typeof loader === 'object' && loader.loader && loader.loader.includes('sass-loader')) {
+                  loader.options = { ...loader.options, ...sassOptions };
+                }
+              });
+            }
+          }
+        });
+      }
+    }
+
     if (plugin && plugin.config) {
       config = plugin.config(config, options);
     }

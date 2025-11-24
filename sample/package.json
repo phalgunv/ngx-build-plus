@@ -29,6 +29,9 @@
     "build:externals-demo-scripts:externals": "ng build --extra-webpack-config projects/externals-demo-scripts/webpack.externals.js --prod --project externals-demo-scripts --single-bundle"
   },
   "private": true,
+  "overrides": {
+    "node-sass": "sass"
+  },
   "dependencies": {
     "@angular/animations": "^8.0.0",
     "@angular/common": "^8.0.0",
@@ -72,6 +75,7 @@
     "ng-packagr": "^4.2.0",
     "ngx-build-plus": "",
     "protractor": "^5.4.2",
+    "sass": "^1.32.0",
     "ts-node": "~7.0.1",
     "tsickle": ">=0.34.0",
     "tslib": "^1.9.0",
